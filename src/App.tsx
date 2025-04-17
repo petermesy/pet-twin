@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PetAvatar from './PetAvatar.tsx';
-import dogImage from './assets/dogImage.avif';
+import petAnimation from './assets/happyAnimation.json'; // Import the Lottie JSON file
 
 import './App.css';
 
@@ -10,7 +10,7 @@ function App() {
 
   const handleUserInput = (input: string) => {
     setChatHistory((prev) => [...prev, `You: ${input}`]);
-  
+
     if (input.toLowerCase().includes('happy') || input.toLowerCase().includes('love')) {
       setEmotion('happy');
       setChatHistory((prev) => [...prev, 'Pet: Yay! I am so happy! 😊']);
@@ -26,16 +26,23 @@ function App() {
   const feedPet = () => {
     setEmotion('happy');
     setChatHistory((prev) => [...prev, 'Pet: Yum! Thank you for the food! 🍎']);
-    setTimeout(() => setEmotion('idle'), 2000); // Reset to idle after 2 seconds
+    setTimeout(() => setEmotion('idle'), 3000); // Reset to idle after 2 seconds
+  };
+
+  const makePetHappy = () => {
+    setEmotion('happy');
+    setChatHistory((prev) => [...prev, 'Pet: Yay! You made me happy! 😊']);
+    setTimeout(() => setEmotion('idle'), 3000); // Reset to idle after 2 seconds
   };
 
   return (
     <div style={{ textAlign: 'center' }}>
       <h1>My Digital Pet Twin 🐾</h1>
-      <PetAvatar imageUrl={dogImage} emotion={emotion} />
-      
-        {/* Chat History */}
-        <div
+      {/* Pass the Lottie animation JSON to PetAvatar */}
+      <PetAvatar animationData={petAnimation} emotion={emotion} />
+
+      {/* Chat History */}
+      <div
         style={{
           margin: '20px auto',
           padding: '10px',
@@ -69,6 +76,24 @@ function App() {
           border: '1px solid #ccc',
         }}
       />
+
+      {/* Make Me Happy Button */}
+      <button
+        onClick={makePetHappy}
+        style={{
+          marginTop: '20px',
+          padding: '10px 20px',
+          fontSize: '16px',
+          borderRadius: '10px',
+          backgroundColor: '#ffca3a',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        Make Me Happy 😊
+      </button>
+
+      {/* Feed Me Button */}
       <button
         onClick={feedPet}
         style={{
